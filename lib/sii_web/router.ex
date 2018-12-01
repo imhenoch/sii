@@ -23,5 +23,6 @@ defmodule SiiWeb.Router do
     pipe_through :api
 
     resources "/careers", CareerController, except: [:delete, :edit]
+    resources "/periods", PeriodController, except: [:delete, :edit]
   end
 end
