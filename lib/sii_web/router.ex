@@ -28,5 +28,6 @@ defmodule SiiWeb.Router do
     resources "/chances", ChanceController, except: [:delete, :edit]
     resources "/subjects", SubjectController, except: [:delete, :edit]
     resources "/students", StudentController, except: [:edit]
+    resources "/teachers", TeacherController, except: [:edit]
   end
 end
