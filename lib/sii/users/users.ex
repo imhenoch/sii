@@ -238,6 +238,43 @@ defmodule Sii.Users do
 
   alias Sii.Users.Admin
 
+  alias Sii.Admin.Guardian, as: AdminGuardian
+
+  def admin_sign_in(email, password) do
+    case admin_auth(email, password) do
+      {:ok, admin} ->
+        AdminGuardian.encode_and_sign(admin)
+
+      _ ->
+        {:error, :unauthorized}
+    end
+  end
+
+  defp admin_auth(email, password)
+       when is_binary(email) and is_binary(password) do
+    with {:ok, admin} <- get_admin_by_email(email),
+         do: verify_admin_password(password, admin)
+  end
+
+  defp get_admin_by_email(email) when is_binary(email) do
+    case Repo.get_by(Admin, email: email) do
+      nil ->
+        dummy_checkpw()
+        {:error, "Login error"}
+
+      admin ->
+        {:ok, admin}
+    end
+  end
+
+  defp verify_admin_password(password, %Admin{} = admin) when is_binary(password) do
+    if checkpw(password, admin.password_hash) do
+      {:ok, admin}
+    else
+      {:error, :invalid_password}
+    end
+  end
+
   @doc """
   Returns the list of admins.
 

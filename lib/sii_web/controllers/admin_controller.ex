@@ -6,6 +6,16 @@ defmodule SiiWeb.AdminController do
 
   action_fallback SiiWeb.FallbackController
 
+  def sign_in(conn, %{"email" => email, "password" => password}) do
+    case Users.admin_sign_in(email, password) do
+      {:ok, token, _claims} ->
+        conn |> render("jwt.json", jwt: token)
+
+      _ ->
+        {:error, :unauthorized}
+    end
+  end
+
   def index(conn, _params) do
     admins = Users.list_admins()
     render(conn, "index.json", admins: admins)

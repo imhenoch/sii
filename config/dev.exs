@@ -78,3 +78,11 @@ config :sii, Sii.Repo,
 config :sii, Sii.Student.Guardian,
   issuer: "sii_student",
   secret_key: "FCoI5ttwSQSht0M7/fwP2GejKmMmVfjbSjIe7/bKBpUjbQqkgFLPyQWrPjoGjr/g"
+
+config :sii, Sii.Admin.Guardian,
+  issuer: "sii_admin",
+  secret_key: "k5jWP9DBld8fHRgxqOIZiKhki5W+mRAz6uu4rlsPj5heNT63J4piie7ZGagxRN3N"
+
+config :sii, Sii.Teacher.Guardian,
+  issuer: "sii_teacher",
+  secret_key: "Da2liIeYFhhAxh3r6rY+gTf2o/luymvxttKIp/8Xm0n7u5cDJddgTFbns/7W+eeY"

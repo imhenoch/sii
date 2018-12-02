@@ -13,8 +13,16 @@ defmodule SiiWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :admins_authenticated do
+    plug Sii.Guardian.AuthAdminPipeline
+  end
+
   pipeline :students_authenticated do
     plug Sii.Guardian.AuthStudentPipeline
+  end
+
+  pipeline :teachers_authenticated do
+    plug Sii.Guardian.AuthTeacherPipeline
   end
 
   scope "/", SiiWeb do
@@ -27,6 +35,7 @@ defmodule SiiWeb.Router do
     pipe_through :api
 
     post "/student", StudentController, :sign_in
+    post "/admin", AdminController, :sign_in
 
     # resources "/careers", CareerController, except: [:delete, :edit]
     # resources "/periods", PeriodController, except: [:delete, :edit]

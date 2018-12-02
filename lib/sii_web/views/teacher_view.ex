@@ -16,7 +16,8 @@ defmodule SiiWeb.TeacherView do
       first_name: teacher.first_name,
       last_name: teacher.last_name,
       email: teacher.email,
-      control_number: teacher.control_number
+      control_number: teacher.control_number,
+      department_id: teacher.department_id
     }
   end
 end

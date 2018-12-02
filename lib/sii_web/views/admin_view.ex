@@ -13,4 +13,8 @@ defmodule SiiWeb.AdminView do
   def render("admin.json", %{admin: admin}) do
     %{id: admin.id, email: admin.email}
   end
+
+  def render("jwt.json", %{jwt: jwt}) do
+    %{jwt: jwt}
+  end
 end
