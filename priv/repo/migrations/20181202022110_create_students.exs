@@ -9,11 +9,14 @@ defmodule Sii.Repo.Migrations.CreateStudents do
       add :control_number, :string
       add :password_hash, :string
       add :image, :string
+      add :semester, :integer
+      add :career_id, references(:careers, on_delete: :nothing)
 
       timestamps()
     end
 
     create unique_index(:students, [:email])
     create unique_index(:students, [:control_number])
+    create index(:students, [:career_id])
   end
 end

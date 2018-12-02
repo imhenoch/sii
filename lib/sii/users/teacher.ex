@@ -8,6 +8,7 @@ defmodule Sii.Users.Teacher do
     field :email, :string
     field :first_name, :string
     field :last_name, :string
+    field :department_id, :id
     field :password_hash, :string
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
@@ -23,6 +24,7 @@ defmodule Sii.Users.Teacher do
       :last_name,
       :email,
       :control_number,
+      :department_id,
       :password,
       :password_confirmation
     ])
@@ -31,6 +33,7 @@ defmodule Sii.Users.Teacher do
       :last_name,
       :email,
       :control_number,
+      :department_id,
       :password,
       :password_confirmation
     ])

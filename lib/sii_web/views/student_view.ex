@@ -17,7 +17,9 @@ defmodule SiiWeb.StudentView do
       last_name: student.last_name,
       email: student.email,
       control_number: student.control_number,
-      image: student.image
+      image: student.image,
+      career_id: student.career_id,
+      semester: student.semester
     }
   end
 
