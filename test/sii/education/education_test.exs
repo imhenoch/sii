@@ -484,4 +484,69 @@ defmodule Sii.EducationTest do
       assert %Ecto.Changeset{} = Education.change_kardex(kardex)
     end
   end
+
+  describe "schedules" do
+    alias Sii.Education.Schedule
+
+    @valid_attrs %{classroom: "some classroom", day: 42, end_time: "some end_time", start_time: "some start_time"}
+    @update_attrs %{classroom: "some updated classroom", day: 43, end_time: "some updated end_time", start_time: "some updated start_time"}
+    @invalid_attrs %{classroom: nil, day: nil, end_time: nil, start_time: nil}
+
+    def schedule_fixture(attrs \\ %{}) do
+      {:ok, schedule} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Education.create_schedule()
+
+      schedule
+    end
+
+    test "list_schedules/0 returns all schedules" do
+      schedule = schedule_fixture()
+      assert Education.list_schedules() == [schedule]
+    end
+
+    test "get_schedule!/1 returns the schedule with given id" do
+      schedule = schedule_fixture()
+      assert Education.get_schedule!(schedule.id) == schedule
+    end
+
+    test "create_schedule/1 with valid data creates a schedule" do
+      assert {:ok, %Schedule{} = schedule} = Education.create_schedule(@valid_attrs)
+      assert schedule.classroom == "some classroom"
+      assert schedule.day == 42
+      assert schedule.end_time == "some end_time"
+      assert schedule.start_time == "some start_time"
+    end
+
+    test "create_schedule/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Education.create_schedule(@invalid_attrs)
+    end
+
+    test "update_schedule/2 with valid data updates the schedule" do
+      schedule = schedule_fixture()
+      assert {:ok, %Schedule{} = schedule} = Education.update_schedule(schedule, @update_attrs)
+      assert schedule.classroom == "some updated classroom"
+      assert schedule.day == 43
+      assert schedule.end_time == "some updated end_time"
+      assert schedule.start_time == "some updated start_time"
+    end
+
+    test "update_schedule/2 with invalid data returns error changeset" do
+      schedule = schedule_fixture()
+      assert {:error, %Ecto.Changeset{}} = Education.update_schedule(schedule, @invalid_attrs)
+      assert schedule == Education.get_schedule!(schedule.id)
+    end
+
+    test "delete_schedule/1 deletes the schedule" do
+      schedule = schedule_fixture()
+      assert {:ok, %Schedule{}} = Education.delete_schedule(schedule)
+      assert_raise Ecto.NoResultsError, fn -> Education.get_schedule!(schedule.id) end
+    end
+
+    test "change_schedule/1 returns a schedule changeset" do
+      schedule = schedule_fixture()
+      assert %Ecto.Changeset{} = Education.change_schedule(schedule)
+    end
+  end
 end
