@@ -51,6 +51,7 @@ defmodule SiiWeb.Router do
     resources "/teachers", TeacherController, except: [:edit]
     resources "/admins", AdminController, except: [:edit, :delete]
     resources "/groups", GroupController, except: [:delete, :edit]
+    resources "/schedules", ScheduleController, except: [:delete, :edit]
     resources "/lists", ListController, except: [:delete]
     resources "/kardexes", KardexController, except: [:delete, :edit]
   end
