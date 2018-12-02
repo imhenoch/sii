@@ -299,4 +299,65 @@ defmodule Sii.EducationTest do
       assert %Ecto.Changeset{} = Education.change_subject(subject)
     end
   end
+
+  describe "groups" do
+    alias Sii.Education.Group
+
+    @valid_attrs %{letter: "some letter", open: true}
+    @update_attrs %{letter: "some updated letter", open: false}
+    @invalid_attrs %{letter: nil, open: nil}
+
+    def group_fixture(attrs \\ %{}) do
+      {:ok, group} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Education.create_group()
+
+      group
+    end
+
+    test "list_groups/0 returns all groups" do
+      group = group_fixture()
+      assert Education.list_groups() == [group]
+    end
+
+    test "get_group!/1 returns the group with given id" do
+      group = group_fixture()
+      assert Education.get_group!(group.id) == group
+    end
+
+    test "create_group/1 with valid data creates a group" do
+      assert {:ok, %Group{} = group} = Education.create_group(@valid_attrs)
+      assert group.letter == "some letter"
+      assert group.open == true
+    end
+
+    test "create_group/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Education.create_group(@invalid_attrs)
+    end
+
+    test "update_group/2 with valid data updates the group" do
+      group = group_fixture()
+      assert {:ok, %Group{} = group} = Education.update_group(group, @update_attrs)
+      assert group.letter == "some updated letter"
+      assert group.open == false
+    end
+
+    test "update_group/2 with invalid data returns error changeset" do
+      group = group_fixture()
+      assert {:error, %Ecto.Changeset{}} = Education.update_group(group, @invalid_attrs)
+      assert group == Education.get_group!(group.id)
+    end
+
+    test "delete_group/1 deletes the group" do
+      group = group_fixture()
+      assert {:ok, %Group{}} = Education.delete_group(group)
+      assert_raise Ecto.NoResultsError, fn -> Education.get_group!(group.id) end
+    end
+
+    test "change_group/1 returns a group changeset" do
+      group = group_fixture()
+      assert %Ecto.Changeset{} = Education.change_group(group)
+    end
+  end
 end
