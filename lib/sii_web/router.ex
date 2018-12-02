@@ -29,5 +29,6 @@ defmodule SiiWeb.Router do
     resources "/subjects", SubjectController, except: [:delete, :edit]
     resources "/students", StudentController, except: [:edit]
     resources "/teachers", TeacherController, except: [:edit]
+    resources "/admins", AdminController, except: [:edit]
   end
 end
