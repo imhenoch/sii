@@ -20,4 +20,8 @@ defmodule SiiWeb.TeacherView do
       department_id: teacher.department_id
     }
   end
+
+  def render("jwt.json", %{jwt: jwt}) do
+    %{jwt: jwt}
+  end
 end

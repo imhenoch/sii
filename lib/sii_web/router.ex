@@ -36,6 +36,7 @@ defmodule SiiWeb.Router do
 
     post "/student", StudentController, :sign_in
     post "/admin", AdminController, :sign_in
+    post "/teacher", TeacherController, :sign_in
 
     # resources "/careers", CareerController, except: [:delete, :edit]
     # resources "/periods", PeriodController, except: [:delete, :edit]

@@ -142,6 +142,43 @@ defmodule Sii.Users do
 
   alias Sii.Users.Teacher
 
+  alias Sii.Teacher.Guardian, as: TeacherGuardian
+
+  def teacher_sign_in(control_number, password) do
+    case teacher_auth(control_number, password) do
+      {:ok, teacher} ->
+        TeacherGuardian.encode_and_sign(teacher)
+
+      _ ->
+        {:error, :unauthorized}
+    end
+  end
+
+  defp teacher_auth(control_number, password)
+       when is_binary(control_number) and is_binary(password) do
+    with {:ok, teacher} <- get_teacher_by_control_number(control_number),
+         do: verify_teacher_password(password, teacher)
+  end
+
+  defp get_teacher_by_control_number(control_number) when is_binary(control_number) do
+    case Repo.get_by(Teacher, control_number: control_number) do
+      nil ->
+        dummy_checkpw()
+        {:error, "Login error"}
+
+      teacher ->
+        {:ok, teacher}
+    end
+  end
+
+  defp verify_teacher_password(password, %Teacher{} = teacher) when is_binary(password) do
+    if checkpw(password, teacher.password_hash) do
+      {:ok, teacher}
+    else
+      {:error, :invalid_password}
+    end
+  end
+
   @doc """
   Returns the list of teachers.
 
