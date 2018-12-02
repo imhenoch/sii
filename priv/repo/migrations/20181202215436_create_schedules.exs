@@ -12,7 +12,6 @@ defmodule Sii.Repo.Migrations.CreateSchedules do
       timestamps()
     end
 
-    create index(:schedules, [:group_id])
     create unique_index(:schedules, [:group_id, :day], name: :schedules_group_day_index)
   end
 end

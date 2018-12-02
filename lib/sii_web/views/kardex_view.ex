@@ -11,6 +11,12 @@ defmodule SiiWeb.KardexView do
   end
 
   def render("kardex.json", %{kardex: kardex}) do
-    %{id: kardex.id, grade: kardex.grade}
+    %{
+      id: kardex.id,
+      grade: kardex.grade,
+      student_id: kardex.student_id,
+      subject_id: kardex.subject_id,
+      chance_id: kardex.chance_id
+    }
   end
 end

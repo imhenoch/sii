@@ -14,8 +14,8 @@ defmodule Sii.Education.Kardex do
   @doc false
   def changeset(kardex, attrs) do
     kardex
-    |> cast(attrs, [:grade])
-    |> validate_required([:grade])
+    |> cast(attrs, [:grade, :student_id, :subject_id, :chance_id])
+    |> validate_required([:grade, :student_id, :subject_id, :chance_id])
     |> unique_constraint(:kardexes_student_subject_chance_id,
       name: :kardexes_student_subject_chance_id
     )

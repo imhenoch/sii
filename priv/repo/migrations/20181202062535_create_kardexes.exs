@@ -11,10 +11,6 @@ defmodule Sii.Repo.Migrations.CreateKardexes do
       timestamps()
     end
 
-    create index(:kardexes, [:student_id])
-    create index(:kardexes, [:subject_id])
-    create index(:kardexes, [:chance_id])
-
     create unique_index(:kardexes, [:student_id, :subject_id, :chance_id],
              name: :kardexes_student_subject_chance_id
            )

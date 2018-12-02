@@ -17,6 +17,5 @@ defmodule Sii.Repo.Migrations.CreateStudents do
 
     create unique_index(:students, [:email])
     create unique_index(:students, [:control_number])
-    create index(:students, [:career_id])
   end
 end

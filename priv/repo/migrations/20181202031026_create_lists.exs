@@ -13,9 +13,6 @@ defmodule Sii.Repo.Migrations.CreateLists do
       timestamps()
     end
 
-    create index(:lists, [:group_id])
-    create index(:lists, [:student_id])
-
     create unique_index(:lists, [:group_id, :student_id], name: :lists_group_student_id)
   end
 end
