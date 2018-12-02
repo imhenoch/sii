@@ -122,4 +122,63 @@ defmodule Sii.EducationTest do
       assert %Ecto.Changeset{} = Education.change_period(period)
     end
   end
+
+  describe "departments" do
+    alias Sii.Education.Department
+
+    @valid_attrs %{department_name: "some department_name"}
+    @update_attrs %{department_name: "some updated department_name"}
+    @invalid_attrs %{department_name: nil}
+
+    def department_fixture(attrs \\ %{}) do
+      {:ok, department} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Education.create_department()
+
+      department
+    end
+
+    test "list_departments/0 returns all departments" do
+      department = department_fixture()
+      assert Education.list_departments() == [department]
+    end
+
+    test "get_department!/1 returns the department with given id" do
+      department = department_fixture()
+      assert Education.get_department!(department.id) == department
+    end
+
+    test "create_department/1 with valid data creates a department" do
+      assert {:ok, %Department{} = department} = Education.create_department(@valid_attrs)
+      assert department.department_name == "some department_name"
+    end
+
+    test "create_department/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Education.create_department(@invalid_attrs)
+    end
+
+    test "update_department/2 with valid data updates the department" do
+      department = department_fixture()
+      assert {:ok, %Department{} = department} = Education.update_department(department, @update_attrs)
+      assert department.department_name == "some updated department_name"
+    end
+
+    test "update_department/2 with invalid data returns error changeset" do
+      department = department_fixture()
+      assert {:error, %Ecto.Changeset{}} = Education.update_department(department, @invalid_attrs)
+      assert department == Education.get_department!(department.id)
+    end
+
+    test "delete_department/1 deletes the department" do
+      department = department_fixture()
+      assert {:ok, %Department{}} = Education.delete_department(department)
+      assert_raise Ecto.NoResultsError, fn -> Education.get_department!(department.id) end
+    end
+
+    test "change_department/1 returns a department changeset" do
+      department = department_fixture()
+      assert %Ecto.Changeset{} = Education.change_department(department)
+    end
+  end
 end
