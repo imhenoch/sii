@@ -425,4 +425,63 @@ defmodule Sii.EducationTest do
       assert %Ecto.Changeset{} = Education.change_list(list)
     end
   end
+
+  describe "kardexes" do
+    alias Sii.Education.Kardex
+
+    @valid_attrs %{grade: 42}
+    @update_attrs %{grade: 43}
+    @invalid_attrs %{grade: nil}
+
+    def kardex_fixture(attrs \\ %{}) do
+      {:ok, kardex} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Education.create_kardex()
+
+      kardex
+    end
+
+    test "list_kardexes/0 returns all kardexes" do
+      kardex = kardex_fixture()
+      assert Education.list_kardexes() == [kardex]
+    end
+
+    test "get_kardex!/1 returns the kardex with given id" do
+      kardex = kardex_fixture()
+      assert Education.get_kardex!(kardex.id) == kardex
+    end
+
+    test "create_kardex/1 with valid data creates a kardex" do
+      assert {:ok, %Kardex{} = kardex} = Education.create_kardex(@valid_attrs)
+      assert kardex.grade == 42
+    end
+
+    test "create_kardex/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Education.create_kardex(@invalid_attrs)
+    end
+
+    test "update_kardex/2 with valid data updates the kardex" do
+      kardex = kardex_fixture()
+      assert {:ok, %Kardex{} = kardex} = Education.update_kardex(kardex, @update_attrs)
+      assert kardex.grade == 43
+    end
+
+    test "update_kardex/2 with invalid data returns error changeset" do
+      kardex = kardex_fixture()
+      assert {:error, %Ecto.Changeset{}} = Education.update_kardex(kardex, @invalid_attrs)
+      assert kardex == Education.get_kardex!(kardex.id)
+    end
+
+    test "delete_kardex/1 deletes the kardex" do
+      kardex = kardex_fixture()
+      assert {:ok, %Kardex{}} = Education.delete_kardex(kardex)
+      assert_raise Ecto.NoResultsError, fn -> Education.get_kardex!(kardex.id) end
+    end
+
+    test "change_kardex/1 returns a kardex changeset" do
+      kardex = kardex_fixture()
+      assert %Ecto.Changeset{} = Education.change_kardex(kardex)
+    end
+  end
 end

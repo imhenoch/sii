@@ -14,6 +14,6 @@ defmodule Sii.Education.Period do
     period
     |> cast(attrs, [:year, :part])
     |> validate_required([:year, :part])
-    |> unique_constraint(:periods_year_part, name: :careers_year_part_index)
+    |> unique_constraint(:periods_year_part_index, name: :periods_year_part_index)
   end
 end

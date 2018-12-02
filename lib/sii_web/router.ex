@@ -52,6 +52,7 @@ defmodule SiiWeb.Router do
     resources "/admins", AdminController, except: [:edit, :delete]
     resources "/groups", GroupController, except: [:delete, :edit]
     resources "/lists", ListController, except: [:delete]
+    resources "/kardexes", KardexController, except: [:delete, :edit]
   end
 
   scope "/api", SiiWeb do

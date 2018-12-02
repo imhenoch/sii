@@ -14,5 +14,6 @@ defmodule Sii.Education.Subject do
     subject
     |> cast(attrs, [:subject_name, :career_id])
     |> validate_required([:subject_name, :career_id])
+    |> unique_constraint(:subjects_subject_career_index, name: :subjects_subject_career_index)
   end
 end

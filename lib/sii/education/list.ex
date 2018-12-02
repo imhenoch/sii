@@ -32,5 +32,6 @@ defmodule Sii.Education.List do
       :group_id,
       :student_id
     ])
+    |> unique_constraint(:lists_group_student_id, name: :lists_group_student_id)
   end
 end
