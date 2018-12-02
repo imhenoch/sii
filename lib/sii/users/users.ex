@@ -5,8 +5,46 @@ defmodule Sii.Users do
 
   import Ecto.Query, warn: false
   alias Sii.Repo
+  import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
 
   alias Sii.Users.Student
+
+  alias Sii.Student.Guardian, as: StudentGuardian
+
+  def student_sign_in(control_number, password) do
+    case student_auth(control_number, password) do
+      {:ok, student} ->
+        StudentGuardian.encode_and_sign(student)
+
+      _ ->
+        {:error, :unauthorized}
+    end
+  end
+
+  defp student_auth(control_number, password)
+       when is_binary(control_number) and is_binary(password) do
+    with {:ok, student} <- get_student_by_control_number(control_number),
+         do: verify_student_password(password, student)
+  end
+
+  defp get_student_by_control_number(control_number) when is_binary(control_number) do
+    case Repo.get_by(Student, control_number: control_number) do
+      nil ->
+        dummy_checkpw()
+        {:error, "Login error"}
+
+      student ->
+        {:ok, student}
+    end
+  end
+
+  defp verify_student_password(password, %Student{} = student) when is_binary(password) do
+    if checkpw(password, student.password_hash) do
+      {:ok, student}
+    else
+      {:error, :invalid_password}
+    end
+  end
 
   @doc """
   Returns the list of students.
@@ -104,6 +142,43 @@ defmodule Sii.Users do
 
   alias Sii.Users.Teacher
 
+  alias Sii.Teacher.Guardian, as: TeacherGuardian
+
+  def teacher_sign_in(control_number, password) do
+    case teacher_auth(control_number, password) do
+      {:ok, teacher} ->
+        TeacherGuardian.encode_and_sign(teacher)
+
+      _ ->
+        {:error, :unauthorized}
+    end
+  end
+
+  defp teacher_auth(control_number, password)
+       when is_binary(control_number) and is_binary(password) do
+    with {:ok, teacher} <- get_teacher_by_control_number(control_number),
+         do: verify_teacher_password(password, teacher)
+  end
+
+  defp get_teacher_by_control_number(control_number) when is_binary(control_number) do
+    case Repo.get_by(Teacher, control_number: control_number) do
+      nil ->
+        dummy_checkpw()
+        {:error, "Login error"}
+
+      teacher ->
+        {:ok, teacher}
+    end
+  end
+
+  defp verify_teacher_password(password, %Teacher{} = teacher) when is_binary(password) do
+    if checkpw(password, teacher.password_hash) do
+      {:ok, teacher}
+    else
+      {:error, :invalid_password}
+    end
+  end
+
   @doc """
   Returns the list of teachers.
 
@@ -199,6 +274,43 @@ defmodule Sii.Users do
   end
 
   alias Sii.Users.Admin
+
+  alias Sii.Admin.Guardian, as: AdminGuardian
+
+  def admin_sign_in(email, password) do
+    case admin_auth(email, password) do
+      {:ok, admin} ->
+        AdminGuardian.encode_and_sign(admin)
+
+      _ ->
+        {:error, :unauthorized}
+    end
+  end
+
+  defp admin_auth(email, password)
+       when is_binary(email) and is_binary(password) do
+    with {:ok, admin} <- get_admin_by_email(email),
+         do: verify_admin_password(password, admin)
+  end
+
+  defp get_admin_by_email(email) when is_binary(email) do
+    case Repo.get_by(Admin, email: email) do
+      nil ->
+        dummy_checkpw()
+        {:error, "Login error"}
+
+      admin ->
+        {:ok, admin}
+    end
+  end
+
+  defp verify_admin_password(password, %Admin{} = admin) when is_binary(password) do
+    if checkpw(password, admin.password_hash) do
+      {:ok, admin}
+    else
+      {:error, :invalid_password}
+    end
+  end
 
   @doc """
   Returns the list of admins.

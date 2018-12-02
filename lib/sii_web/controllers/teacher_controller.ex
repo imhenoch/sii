@@ -6,6 +6,16 @@ defmodule SiiWeb.TeacherController do
 
   action_fallback SiiWeb.FallbackController
 
+  def sign_in(conn, %{"control_number" => control_number, "password" => password}) do
+    case Users.teacher_sign_in(control_number, password) do
+      {:ok, token, _claims} ->
+        conn |> render("jwt.json", jwt: token)
+
+      _ ->
+        {:error, :unauthorized}
+    end
+  end
+
   def index(conn, _params) do
     teachers = Users.list_teachers()
     render(conn, "index.json", teachers: teachers)

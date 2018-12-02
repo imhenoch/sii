@@ -6,6 +6,21 @@ defmodule SiiWeb.StudentController do
 
   action_fallback SiiWeb.FallbackController
 
+  def sign_in(conn, %{"control_number" => control_number, "password" => password}) do
+    case Users.student_sign_in(control_number, password) do
+      {:ok, token, _claims} ->
+        conn |> render("jwt.json", jwt: token)
+
+      _ ->
+        {:error, :unauthorized}
+    end
+  end
+
+  def profile(conn, _params) do
+    student = Guardian.Plug.current_resource(conn)
+    conn |> render("show.json", student: student)
+  end
+
   def index(conn, _params) do
     students = Users.list_students()
     render(conn, "index.json", students: students)

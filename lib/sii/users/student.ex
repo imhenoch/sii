@@ -9,6 +9,8 @@ defmodule Sii.Users.Student do
     field :first_name, :string
     field :image, :string
     field :last_name, :string
+    field :semester, :integer
+    field :career_id, :id
     field :password_hash, :string
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
@@ -26,7 +28,9 @@ defmodule Sii.Users.Student do
       :control_number,
       :image,
       :password,
-      :password_confirmation
+      :password_confirmation,
+      :semester,
+      :career_id
     ])
     |> validate_required([
       :first_name,
@@ -34,7 +38,9 @@ defmodule Sii.Users.Student do
       :email,
       :control_number,
       :password,
-      :password_confirmation
+      :password_confirmation,
+      :semester,
+      :career_id
     ])
     |> validate_format(:email, ~r/@/)
     |> validate_length(:password, min: 8)

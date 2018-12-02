@@ -8,11 +8,13 @@ defmodule Sii.Repo.Migrations.CreateTeachers do
       add :email, :string
       add :control_number, :string
       add :password_hash, :string
+      add :department_id, references(:departments, on_delete: :nothing)
 
       timestamps()
     end
 
     create unique_index(:teachers, [:email])
     create unique_index(:teachers, [:control_number])
+    create index(:teachers, [:department_id])
   end
 end
