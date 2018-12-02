@@ -360,4 +360,69 @@ defmodule Sii.EducationTest do
       assert %Ecto.Changeset{} = Education.change_group(group)
     end
   end
+
+  describe "lists" do
+    alias Sii.Education.List
+
+    @valid_attrs %{first_evaluation: 42, fourth_evaluation: 42, second_evaluation: 42, third_evaluation: 42}
+    @update_attrs %{first_evaluation: 43, fourth_evaluation: 43, second_evaluation: 43, third_evaluation: 43}
+    @invalid_attrs %{first_evaluation: nil, fourth_evaluation: nil, second_evaluation: nil, third_evaluation: nil}
+
+    def list_fixture(attrs \\ %{}) do
+      {:ok, list} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Education.create_list()
+
+      list
+    end
+
+    test "list_lists/0 returns all lists" do
+      list = list_fixture()
+      assert Education.list_lists() == [list]
+    end
+
+    test "get_list!/1 returns the list with given id" do
+      list = list_fixture()
+      assert Education.get_list!(list.id) == list
+    end
+
+    test "create_list/1 with valid data creates a list" do
+      assert {:ok, %List{} = list} = Education.create_list(@valid_attrs)
+      assert list.first_evaluation == 42
+      assert list.fourth_evaluation == 42
+      assert list.second_evaluation == 42
+      assert list.third_evaluation == 42
+    end
+
+    test "create_list/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Education.create_list(@invalid_attrs)
+    end
+
+    test "update_list/2 with valid data updates the list" do
+      list = list_fixture()
+      assert {:ok, %List{} = list} = Education.update_list(list, @update_attrs)
+      assert list.first_evaluation == 43
+      assert list.fourth_evaluation == 43
+      assert list.second_evaluation == 43
+      assert list.third_evaluation == 43
+    end
+
+    test "update_list/2 with invalid data returns error changeset" do
+      list = list_fixture()
+      assert {:error, %Ecto.Changeset{}} = Education.update_list(list, @invalid_attrs)
+      assert list == Education.get_list!(list.id)
+    end
+
+    test "delete_list/1 deletes the list" do
+      list = list_fixture()
+      assert {:ok, %List{}} = Education.delete_list(list)
+      assert_raise Ecto.NoResultsError, fn -> Education.get_list!(list.id) end
+    end
+
+    test "change_list/1 returns a list changeset" do
+      list = list_fixture()
+      assert %Ecto.Changeset{} = Education.change_list(list)
+    end
+  end
 end
