@@ -10,5 +10,9 @@ defmodule Sii.Repo.Migrations.CreateSubjects do
     end
 
     create index(:subjects, [:career_id])
+
+    create unique_index(:subjects, [:career_id, :subject_name],
+             name: :subjects_subject_career_index
+           )
   end
 end

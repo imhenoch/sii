@@ -37,22 +37,31 @@ defmodule SiiWeb.Router do
     post "/student", StudentController, :sign_in
     post "/admin", AdminController, :sign_in
     post "/teacher", TeacherController, :sign_in
+  end
 
-    # resources "/careers", CareerController, except: [:delete, :edit]
-    # resources "/periods", PeriodController, except: [:delete, :edit]
-    # resources "/departments", DepartmentController, except: [:delete, :edit]
-    # resources "/chances", ChanceController, except: [:delete, :edit]
-    # resources "/subjects", SubjectController, except: [:delete, :edit]
-    # resources "/students", StudentController, except: [:edit]
-    # resources "/teachers", TeacherController, except: [:edit]
-    # resources "/admins", AdminController, except: [:edit]
-    # resources "/groups", GroupController, except: [:delete, :edit]
-    # resources "/lists", ListController, except: [:delete]
+  scope "/api", SiiWeb do
+    pipe_through [:api, :admins_authenticated]
+
+    resources "/careers", CareerController, except: [:delete, :edit]
+    resources "/periods", PeriodController, except: [:delete, :edit]
+    resources "/departments", DepartmentController, except: [:delete, :edit]
+    resources "/chances", ChanceController, except: [:delete, :edit]
+    resources "/subjects", SubjectController, except: [:delete, :edit]
+    resources "/students", StudentController, except: [:delete, :edit]
+    resources "/teachers", TeacherController, except: [:edit]
+    resources "/admins", AdminController, except: [:edit, :delete]
+    resources "/groups", GroupController, except: [:delete, :edit]
+    resources "/lists", ListController, except: [:delete]
+    resources "/kardexes", KardexController, except: [:delete, :edit]
   end
 
   scope "/api", SiiWeb do
     pipe_through [:api, :students_authenticated]
 
     get "/student", StudentController, :profile
+  end
+
+  scope "/api", SiiWeb do
+    pipe_through [:api, :teachers_authenticated]
   end
 end

@@ -677,4 +677,100 @@ defmodule Sii.Education do
   def change_list(%List{} = list) do
     List.changeset(list, %{})
   end
+
+  alias Sii.Education.Kardex
+
+  @doc """
+  Returns the list of kardexes.
+
+  ## Examples
+
+      iex> list_kardexes()
+      [%Kardex{}, ...]
+
+  """
+  def list_kardexes do
+    Repo.all(Kardex)
+  end
+
+  @doc """
+  Gets a single kardex.
+
+  Raises `Ecto.NoResultsError` if the Kardex does not exist.
+
+  ## Examples
+
+      iex> get_kardex!(123)
+      %Kardex{}
+
+      iex> get_kardex!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_kardex!(id), do: Repo.get!(Kardex, id)
+
+  @doc """
+  Creates a kardex.
+
+  ## Examples
+
+      iex> create_kardex(%{field: value})
+      {:ok, %Kardex{}}
+
+      iex> create_kardex(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_kardex(attrs \\ %{}) do
+    %Kardex{}
+    |> Kardex.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a kardex.
+
+  ## Examples
+
+      iex> update_kardex(kardex, %{field: new_value})
+      {:ok, %Kardex{}}
+
+      iex> update_kardex(kardex, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_kardex(%Kardex{} = kardex, attrs) do
+    kardex
+    |> Kardex.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Kardex.
+
+  ## Examples
+
+      iex> delete_kardex(kardex)
+      {:ok, %Kardex{}}
+
+      iex> delete_kardex(kardex)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_kardex(%Kardex{} = kardex) do
+    Repo.delete(kardex)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking kardex changes.
+
+  ## Examples
+
+      iex> change_kardex(kardex)
+      %Ecto.Changeset{source: %Kardex{}}
+
+  """
+  def change_kardex(%Kardex{} = kardex) do
+    Kardex.changeset(kardex, %{})
+  end
 end

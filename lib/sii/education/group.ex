@@ -17,5 +17,8 @@ defmodule Sii.Education.Group do
     group
     |> cast(attrs, [:letter, :open, :subject_id, :teacher_id, :period])
     |> validate_required([:letter, :open, :subject_id, :teacher_id, :period])
+    |> unique_constraint(:groups_teacher_subjet_letter_period_index,
+      name: :groups_teacher_subjet_letter_period_index
+    )
   end
 end
