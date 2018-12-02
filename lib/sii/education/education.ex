@@ -293,4 +293,100 @@ defmodule Sii.Education do
   def change_department(%Department{} = department) do
     Department.changeset(department, %{})
   end
+
+  alias Sii.Education.Chance
+
+  @doc """
+  Returns the list of chances.
+
+  ## Examples
+
+      iex> list_chances()
+      [%Chance{}, ...]
+
+  """
+  def list_chances do
+    Repo.all(Chance)
+  end
+
+  @doc """
+  Gets a single chance.
+
+  Raises `Ecto.NoResultsError` if the Chance does not exist.
+
+  ## Examples
+
+      iex> get_chance!(123)
+      %Chance{}
+
+      iex> get_chance!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_chance!(id), do: Repo.get!(Chance, id)
+
+  @doc """
+  Creates a chance.
+
+  ## Examples
+
+      iex> create_chance(%{field: value})
+      {:ok, %Chance{}}
+
+      iex> create_chance(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_chance(attrs \\ %{}) do
+    %Chance{}
+    |> Chance.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a chance.
+
+  ## Examples
+
+      iex> update_chance(chance, %{field: new_value})
+      {:ok, %Chance{}}
+
+      iex> update_chance(chance, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_chance(%Chance{} = chance, attrs) do
+    chance
+    |> Chance.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Chance.
+
+  ## Examples
+
+      iex> delete_chance(chance)
+      {:ok, %Chance{}}
+
+      iex> delete_chance(chance)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_chance(%Chance{} = chance) do
+    Repo.delete(chance)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking chance changes.
+
+  ## Examples
+
+      iex> change_chance(chance)
+      %Ecto.Changeset{source: %Chance{}}
+
+  """
+  def change_chance(%Chance{} = chance) do
+    Chance.changeset(chance, %{})
+  end
 end

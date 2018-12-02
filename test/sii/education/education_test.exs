@@ -181,4 +181,63 @@ defmodule Sii.EducationTest do
       assert %Ecto.Changeset{} = Education.change_department(department)
     end
   end
+
+  describe "chances" do
+    alias Sii.Education.Chance
+
+    @valid_attrs %{chance_description: "some chance_description"}
+    @update_attrs %{chance_description: "some updated chance_description"}
+    @invalid_attrs %{chance_description: nil}
+
+    def chance_fixture(attrs \\ %{}) do
+      {:ok, chance} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Education.create_chance()
+
+      chance
+    end
+
+    test "list_chances/0 returns all chances" do
+      chance = chance_fixture()
+      assert Education.list_chances() == [chance]
+    end
+
+    test "get_chance!/1 returns the chance with given id" do
+      chance = chance_fixture()
+      assert Education.get_chance!(chance.id) == chance
+    end
+
+    test "create_chance/1 with valid data creates a chance" do
+      assert {:ok, %Chance{} = chance} = Education.create_chance(@valid_attrs)
+      assert chance.chance_description == "some chance_description"
+    end
+
+    test "create_chance/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Education.create_chance(@invalid_attrs)
+    end
+
+    test "update_chance/2 with valid data updates the chance" do
+      chance = chance_fixture()
+      assert {:ok, %Chance{} = chance} = Education.update_chance(chance, @update_attrs)
+      assert chance.chance_description == "some updated chance_description"
+    end
+
+    test "update_chance/2 with invalid data returns error changeset" do
+      chance = chance_fixture()
+      assert {:error, %Ecto.Changeset{}} = Education.update_chance(chance, @invalid_attrs)
+      assert chance == Education.get_chance!(chance.id)
+    end
+
+    test "delete_chance/1 deletes the chance" do
+      chance = chance_fixture()
+      assert {:ok, %Chance{}} = Education.delete_chance(chance)
+      assert_raise Ecto.NoResultsError, fn -> Education.get_chance!(chance.id) end
+    end
+
+    test "change_chance/1 returns a chance changeset" do
+      chance = chance_fixture()
+      assert %Ecto.Changeset{} = Education.change_chance(chance)
+    end
+  end
 end
