@@ -5,8 +5,46 @@ defmodule Sii.Users do
 
   import Ecto.Query, warn: false
   alias Sii.Repo
+  import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
 
   alias Sii.Users.Student
+
+  alias Sii.Student.Guardian, as: StudentGuardian
+
+  def student_sign_in(control_number, password) do
+    case student_auth(control_number, password) do
+      {:ok, student} ->
+        StudentGuardian.encode_and_sign(student)
+
+      _ ->
+        {:error, :unauthorized}
+    end
+  end
+
+  defp student_auth(control_number, password)
+       when is_binary(control_number) and is_binary(password) do
+    with {:ok, student} <- get_student_by_control_number(control_number),
+         do: verify_student_password(password, student)
+  end
+
+  defp get_student_by_control_number(control_number) when is_binary(control_number) do
+    case Repo.get_by(Student, control_number: control_number) do
+      nil ->
+        dummy_checkpw()
+        {:error, "Login error"}
+
+      student ->
+        {:ok, student}
+    end
+  end
+
+  defp verify_student_password(password, %Student{} = student) when is_binary(password) do
+    if checkpw(password, student.password_hash) do
+      {:ok, student}
+    else
+      {:error, :invalid_password}
+    end
+  end
 
   @doc """
   Returns the list of students.

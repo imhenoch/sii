@@ -73,3 +73,8 @@ config :sii, Sii.Repo,
   database: "sii_dev",
   hostname: "localhost",
   pool_size: 10
+
+# Student guardian config
+config :sii, Sii.Student.Guardian,
+  issuer: "sii_student",
+  secret_key: "FCoI5ttwSQSht0M7/fwP2GejKmMmVfjbSjIe7/bKBpUjbQqkgFLPyQWrPjoGjr/g"

@@ -22,15 +22,17 @@ defmodule SiiWeb.Router do
   scope "/api", SiiWeb do
     pipe_through :api
 
-    resources "/careers", CareerController, except: [:delete, :edit]
-    resources "/periods", PeriodController, except: [:delete, :edit]
-    resources "/departments", DepartmentController, except: [:delete, :edit]
-    resources "/chances", ChanceController, except: [:delete, :edit]
-    resources "/subjects", SubjectController, except: [:delete, :edit]
-    resources "/students", StudentController, except: [:edit]
-    resources "/teachers", TeacherController, except: [:edit]
-    resources "/admins", AdminController, except: [:edit]
-    resources "/groups", GroupController, except: [:delete, :edit]
-    resources "/lists", ListController, except: [:delete]
+    post "/student", StudentController, :sign_in
+
+    # resources "/careers", CareerController, except: [:delete, :edit]
+    # resources "/periods", PeriodController, except: [:delete, :edit]
+    # resources "/departments", DepartmentController, except: [:delete, :edit]
+    # resources "/chances", ChanceController, except: [:delete, :edit]
+    # resources "/subjects", SubjectController, except: [:delete, :edit]
+    # resources "/students", StudentController, except: [:edit]
+    # resources "/teachers", TeacherController, except: [:edit]
+    # resources "/admins", AdminController, except: [:edit]
+    # resources "/groups", GroupController, except: [:delete, :edit]
+    # resources "/lists", ListController, except: [:delete]
   end
 end
