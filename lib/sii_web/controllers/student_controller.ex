@@ -21,6 +21,20 @@ defmodule SiiWeb.StudentController do
     conn |> render("show.json", student: student)
   end
 
+  def update_profile(conn, %{"student" => student_params}) do
+    student = Guardian.Plug.current_resource(conn)
+
+    with {:ok, %Student{} = student} <- Users.update_profile(student, student_params) do
+      render(conn, "show.json", student: student)
+    end
+  end
+
+  def student_subjects(conn, _params) do
+    student = Guardian.Plug.current_resource(conn)
+    subjects = Users.list_student_subjects(student.id)
+    conn |> render("subjects.json", subjects: subjects)
+  end
+
   def index(conn, _params) do
     students = Users.list_students()
     render(conn, "index.json", students: students)

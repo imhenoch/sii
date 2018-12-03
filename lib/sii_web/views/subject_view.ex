@@ -11,6 +11,6 @@ defmodule SiiWeb.SubjectView do
   end
 
   def render("subject.json", %{subject: subject}) do
-    %{id: subject.id, subject_name: subject.subject_name}
+    %{id: subject.id, subject_name: subject.subject_name, career_id: subject.career_id}
   end
 end

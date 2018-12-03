@@ -15,8 +15,8 @@ defmodule Sii.Education.Schedule do
   @doc false
   def changeset(schedule, attrs) do
     schedule
-    |> cast(attrs, [:day, :start_time, :end_time, :classroom])
-    |> validate_required([:day, :start_time, :end_time, :classroom])
+    |> cast(attrs, [:day, :start_time, :end_time, :classroom, :group_id])
+    |> validate_required([:day, :start_time, :end_time, :classroom, :group_id])
     |> unique_constraint(:schedules_group_day_index, name: :schedules_group_day_index)
   end
 end

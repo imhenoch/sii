@@ -12,10 +12,6 @@ defmodule Sii.Repo.Migrations.CreateGroups do
       timestamps()
     end
 
-    create index(:groups, [:subject_id])
-    create index(:groups, [:teacher_id])
-    create index(:groups, [:period])
-
     create unique_index(:groups, [:subject_id, :teacher_id, :period, :letter],
              name: :groups_teacher_subjet_letter_period_index
            )

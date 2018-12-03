@@ -16,7 +16,8 @@ defmodule SiiWeb.ScheduleView do
       day: schedule.day,
       start_time: schedule.start_time,
       end_time: schedule.end_time,
-      classroom: schedule.classroom
+      classroom: schedule.classroom,
+      group_id: schedule.group_id
     }
   end
 end

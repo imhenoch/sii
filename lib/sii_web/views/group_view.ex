@@ -11,6 +11,12 @@ defmodule SiiWeb.GroupView do
   end
 
   def render("group.json", %{group: group}) do
-    %{id: group.id, letter: group.letter, open: group.open}
+    %{
+      id: group.id,
+      letter: group.letter,
+      open: group.open,
+      subject_id: group.subject_id,
+      teacher_id: group.teacher_id
+    }
   end
 end

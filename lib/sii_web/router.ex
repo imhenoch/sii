@@ -60,6 +60,8 @@ defmodule SiiWeb.Router do
     pipe_through [:api, :students_authenticated]
 
     get "/student", StudentController, :profile
+    put "/student", StudentController, :update_profile
+    get "/student_subjects", StudentController, :student_subjects
   end
 
   scope "/api", SiiWeb do
