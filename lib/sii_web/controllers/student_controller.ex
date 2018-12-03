@@ -24,7 +24,7 @@ defmodule SiiWeb.StudentController do
   def student_subjects(conn, _params) do
     student = Guardian.Plug.current_resource(conn)
     subjects = Users.list_student_subjects(student.id)
-    conn |> render("subjects.json", subjects)
+    conn |> render("subjects.json", subjects: subjects)
   end
 
   def index(conn, _params) do

@@ -76,7 +76,7 @@ defmodule Sii.Users do
           fourth_evaluation: l.fourth_evaluation
         }
 
-    Repo.one!(query)
+    Repo.all(query)
   end
 
   @doc """
