@@ -26,4 +26,18 @@ defmodule SiiWeb.StudentView do
   def render("jwt.json", %{jwt: jwt}) do
     %{jwt: jwt}
   end
+
+  def render("subjects.json", subjects) do
+    %{
+      group_id: subjects.group_id,
+      subject_name: subjects.subject_name,
+      teacher_email: subjects.teacher_email,
+      teacher_first_name: subjects.teacher_first_name,
+      teacher_last_name: subjects.teacher_last_name,
+      first_evaluation: subjects.first_evaluation,
+      second_evaluation: subjects.second_evaluation,
+      third_evaluation: subjects.third_evaluation,
+      fourth_evaluation: subjects.fourth_evaluation
+    }
+  end
 end

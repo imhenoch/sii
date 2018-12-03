@@ -7,8 +7,14 @@ defmodule Sii.Users do
   alias Sii.Repo
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
 
+  alias Sii.Education.List
+  alias Sii.Education.Group
+  alias Sii.Education.Subject
   alias Sii.Users.Student
-
+  alias Sii.Users.Teacher
+  alias Sii.Users.Admin
+  alias Sii.Admin.Guardian, as: AdminGuardian
+  alias Sii.Teacher.Guardian, as: TeacherGuardian
   alias Sii.Student.Guardian, as: StudentGuardian
 
   def student_sign_in(control_number, password) do
@@ -44,6 +50,33 @@ defmodule Sii.Users do
     else
       {:error, :invalid_password}
     end
+  end
+
+  def list_student_subjects(id) do
+    query =
+      from s in Student,
+        join: l in List,
+        on: s.id == l.student_id,
+        join: g in Group,
+        on: g.id == l.group_id,
+        join: sub in Subject,
+        on: sub.id == g.subject_id,
+        join: t in Teacher,
+        on: t.id == g.teacher_id,
+        where: s.id == ^id,
+        select: %{
+          group_id: g.id,
+          subject_name: sub.subject_name,
+          teacher_email: t.email,
+          teacher_first_name: t.first_name,
+          teacher_last_name: t.last_name,
+          first_evaluation: l.first_evaluation,
+          second_evaluation: l.second_evaluation,
+          third_evaluation: l.third_evaluation,
+          fourth_evaluation: l.fourth_evaluation
+        }
+
+    Repo.one!(query)
   end
 
   @doc """
@@ -139,10 +172,6 @@ defmodule Sii.Users do
   def change_student(%Student{} = student) do
     Student.changeset(student, %{})
   end
-
-  alias Sii.Users.Teacher
-
-  alias Sii.Teacher.Guardian, as: TeacherGuardian
 
   def teacher_sign_in(control_number, password) do
     case teacher_auth(control_number, password) do
@@ -272,10 +301,6 @@ defmodule Sii.Users do
   def change_teacher(%Teacher{} = teacher) do
     Teacher.changeset(teacher, %{})
   end
-
-  alias Sii.Users.Admin
-
-  alias Sii.Admin.Guardian, as: AdminGuardian
 
   def admin_sign_in(email, password) do
     case admin_auth(email, password) do
