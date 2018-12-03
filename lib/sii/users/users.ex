@@ -144,6 +144,12 @@ defmodule Sii.Users do
     |> Repo.update()
   end
 
+  def update_profile(%Student{} = student, attrs) do
+    student
+    |> Student.changeset_update(attrs)
+    |> Repo.update()
+  end
+
   @doc """
   Deletes a Student.
 

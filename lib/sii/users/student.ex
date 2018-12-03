@@ -50,6 +50,26 @@ defmodule Sii.Users.Student do
     |> put_password_hash
   end
 
+  @doc false
+  def changeset_update(student, attrs) do
+    student
+    |> cast(attrs, [
+      :email,
+      :password,
+      :password_confirmation
+    ])
+    |> validate_required([
+      :email,
+      :password,
+      :password_confirmation
+    ])
+    |> validate_format(:email, ~r/@/)
+    |> validate_length(:password, min: 8)
+    |> validate_confirmation(:password)
+    |> unique_constraint(:email)
+    |> put_password_hash
+  end
+
   defp put_password_hash(changeset) do
     case changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: pass}} ->
