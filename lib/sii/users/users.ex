@@ -12,6 +12,7 @@ defmodule Sii.Users do
   alias Sii.Education.Subject
   alias Sii.Education.Kardex
   alias Sii.Education.Chance
+  alias Sii.Education.Schedule
   alias Sii.Users.Student
   alias Sii.Users.Teacher
   alias Sii.Users.Admin
@@ -95,6 +96,31 @@ defmodule Sii.Users do
           subject_name: sub.subject_name,
           grade: k.grade,
           chance_description: c.chance_description
+        }
+
+    Repo.all(query)
+  end
+
+  def list_student_shcedule(id) do
+    query =
+      from s in Student,
+        join: l in List,
+        on: s.id == l.student_id,
+        join: g in Group,
+        on: g.id == l.group_id,
+        join: sub in Subject,
+        on: sub.id == g.subject_id,
+        join: sc in Schedule,
+        on: g.id == sc.group_id,
+        where: s.id == ^id and g.open == true,
+        select: %{
+          id: g.id,
+          subject_name: sub.subject_name,
+          letter: g.letter,
+          day: sc.day,
+          start_time: sc.start_time,
+          end_time: sc.end_time,
+          classroom: sc.classroom
         }
 
     Repo.all(query)

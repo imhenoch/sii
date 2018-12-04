@@ -56,4 +56,20 @@ defmodule SiiWeb.StudentView do
       chance_description: kardex.chance_description
     }
   end
+
+  def render("schedules.json", %{schedules: schedules}) do
+    schedules |> Enum.map(fn x -> render("schedule.json", schedule: x) end)
+  end
+
+  def render("schedule.json", %{schedule: schedule}) do
+    %{
+      id: schedule.id,
+      subject_name: schedule.subject_name,
+      letter: schedule.letter,
+      day: schedule.day,
+      start_time: schedule.start_time,
+      end_time: schedule.end_time,
+      classroom: schedule.classroom
+    }
+  end
 end

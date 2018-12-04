@@ -35,10 +35,16 @@ defmodule SiiWeb.StudentController do
     conn |> render("subjects.json", subjects: subjects)
   end
 
-  def student_kardex(conn, _conn) do
+  def student_kardex(conn, _params) do
     student = Guardian.Plug.current_resource(conn)
     kardexes = Users.list_student_kardex(student.id)
     conn |> render("kardexes.json", kardexes: kardexes)
+  end
+
+  def student_schedule(conn, _params) do
+    student = Guardian.Plug.current_resource(conn)
+    schedules = Users.list_student_shcedule(student.id)
+    conn |> render("schedules.json", schedules: schedules)
   end
 
   def index(conn, _params) do
