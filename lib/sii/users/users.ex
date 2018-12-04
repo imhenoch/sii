@@ -10,6 +10,8 @@ defmodule Sii.Users do
   alias Sii.Education.List
   alias Sii.Education.Group
   alias Sii.Education.Subject
+  alias Sii.Education.Kardex
+  alias Sii.Education.Chance
   alias Sii.Users.Student
   alias Sii.Users.Teacher
   alias Sii.Users.Admin
@@ -74,6 +76,25 @@ defmodule Sii.Users do
           second_evaluation: l.second_evaluation,
           third_evaluation: l.third_evaluation,
           fourth_evaluation: l.fourth_evaluation
+        }
+
+    Repo.all(query)
+  end
+
+  def list_student_kardex(id) do
+    query =
+      from s in Student,
+        join: k in Kardex,
+        on: s.id == k.student_id,
+        join: sub in Subject,
+        on: sub.id == k.subject_id,
+        join: c in Chance,
+        on: c.id == k.chance_id,
+        where: s.id == ^id,
+        select: %{
+          subject_name: sub.subject_name,
+          grade: k.grade,
+          chance_description: c.chance_description
         }
 
     Repo.all(query)

@@ -44,4 +44,16 @@ defmodule SiiWeb.StudentView do
       fourth_evaluation: subject.fourth_evaluation
     }
   end
+
+  def render("kardexes.json", %{kardexes: kardexes}) do
+    kardexes |> Enum.map(fn x -> render("kardex.json", kardex: x) end)
+  end
+
+  def render("kardex.json", %{kardex: kardex}) do
+    %{
+      subject_name: kardex.subject_name,
+      grade: kardex.grade,
+      chance_description: kardex.chance_description
+    }
+  end
 end
