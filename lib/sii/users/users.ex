@@ -126,6 +126,21 @@ defmodule Sii.Users do
     Repo.all(query)
   end
 
+  def list_available_groups(career_id) do
+    query =
+      from g in Group,
+        join: s in Subject,
+        on: s.id == g.subject_id,
+        where: g.open == true and s.career_id == ^career_id,
+        select: %{
+          id: g.id,
+          subject_name: s.subject_name,
+          letter: g.letter
+        }
+
+    Repo.all(query)
+  end
+
   @doc """
   Returns the list of students.
 

@@ -72,4 +72,16 @@ defmodule SiiWeb.StudentView do
       classroom: schedule.classroom
     }
   end
+
+  def render("groups.json", %{groups: groups}) do
+    groups |> Enum.map(fn x -> render("group.json", group: x) end)
+  end
+
+  def render("group.json", %{group: group}) do
+    %{
+      id: group.id,
+      subject_name: group.subject_name,
+      letter: group.letter
+    }
+  end
 end

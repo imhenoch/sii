@@ -64,6 +64,7 @@ defmodule SiiWeb.Router do
     get "/student_subjects", StudentController, :student_subjects
     get "/kardex", StudentController, :student_kardex
     get "/schedule", StudentController, :student_schedule
+    get "/available_groups", StudentController, :available_groups
   end
 
   scope "/api", SiiWeb do

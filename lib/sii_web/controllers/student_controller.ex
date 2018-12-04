@@ -47,6 +47,12 @@ defmodule SiiWeb.StudentController do
     conn |> render("schedules.json", schedules: schedules)
   end
 
+  def available_groups(conn, _params) do
+    student = Guardian.Plug.current_resource(conn)
+    groups = Users.list_available_groups(student.career_id)
+    conn |> render("groups.json", groups: groups)
+  end
+
   def index(conn, _params) do
     students = Users.list_students()
     render(conn, "index.json", students: students)
