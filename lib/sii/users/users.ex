@@ -10,6 +10,9 @@ defmodule Sii.Users do
   alias Sii.Education.List
   alias Sii.Education.Group
   alias Sii.Education.Subject
+  alias Sii.Education.Kardex
+  alias Sii.Education.Chance
+  alias Sii.Education.Schedule
   alias Sii.Users.Student
   alias Sii.Users.Teacher
   alias Sii.Users.Admin
@@ -74,6 +77,65 @@ defmodule Sii.Users do
           second_evaluation: l.second_evaluation,
           third_evaluation: l.third_evaluation,
           fourth_evaluation: l.fourth_evaluation
+        }
+
+    Repo.all(query)
+  end
+
+  def list_student_kardex(id) do
+    query =
+      from s in Student,
+        join: k in Kardex,
+        on: s.id == k.student_id,
+        join: sub in Subject,
+        on: sub.id == k.subject_id,
+        join: c in Chance,
+        on: c.id == k.chance_id,
+        where: s.id == ^id,
+        select: %{
+          subject_name: sub.subject_name,
+          grade: k.grade,
+          chance_description: c.chance_description
+        }
+
+    Repo.all(query)
+  end
+
+  def list_student_shcedule(id) do
+    query =
+      from s in Student,
+        join: l in List,
+        on: s.id == l.student_id,
+        join: g in Group,
+        on: g.id == l.group_id,
+        join: sub in Subject,
+        on: sub.id == g.subject_id,
+        join: sc in Schedule,
+        on: g.id == sc.group_id,
+        where: s.id == ^id and g.open == true,
+        select: %{
+          id: g.id,
+          subject_name: sub.subject_name,
+          letter: g.letter,
+          day: sc.day,
+          start_time: sc.start_time,
+          end_time: sc.end_time,
+          classroom: sc.classroom
+        }
+
+    Repo.all(query)
+  end
+
+  def list_available_groups(career_id) do
+    query =
+      from g in Group,
+        join: s in Subject,
+        on: s.id == g.subject_id,
+        where: g.open == true and s.career_id == ^career_id,
+        select: %{
+          id: g.id,
+          subject_name: s.subject_name,
+          letter: g.letter
         }
 
     Repo.all(query)

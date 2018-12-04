@@ -44,4 +44,44 @@ defmodule SiiWeb.StudentView do
       fourth_evaluation: subject.fourth_evaluation
     }
   end
+
+  def render("kardexes.json", %{kardexes: kardexes}) do
+    kardexes |> Enum.map(fn x -> render("kardex.json", kardex: x) end)
+  end
+
+  def render("kardex.json", %{kardex: kardex}) do
+    %{
+      subject_name: kardex.subject_name,
+      grade: kardex.grade,
+      chance_description: kardex.chance_description
+    }
+  end
+
+  def render("schedules.json", %{schedules: schedules}) do
+    schedules |> Enum.map(fn x -> render("schedule.json", schedule: x) end)
+  end
+
+  def render("schedule.json", %{schedule: schedule}) do
+    %{
+      id: schedule.id,
+      subject_name: schedule.subject_name,
+      letter: schedule.letter,
+      day: schedule.day,
+      start_time: schedule.start_time,
+      end_time: schedule.end_time,
+      classroom: schedule.classroom
+    }
+  end
+
+  def render("groups.json", %{groups: groups}) do
+    groups |> Enum.map(fn x -> render("group.json", group: x) end)
+  end
+
+  def render("group.json", %{group: group}) do
+    %{
+      id: group.id,
+      subject_name: group.subject_name,
+      letter: group.letter
+    }
+  end
 end
