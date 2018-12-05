@@ -69,6 +69,7 @@ defmodule Sii.Users do
         where: s.id == ^id,
         select: %{
           group_id: g.id,
+          letter: g.letter,
           subject_name: sub.subject_name,
           teacher_email: t.email,
           teacher_first_name: t.first_name,

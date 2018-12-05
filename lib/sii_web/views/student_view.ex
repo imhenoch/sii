@@ -35,6 +35,7 @@ defmodule SiiWeb.StudentView do
     %{
       group_id: subject.group_id,
       subject_name: subject.subject_name,
+      letter: subject.letter,
       teacher_email: subject.teacher_email,
       teacher_first_name: subject.teacher_first_name,
       teacher_last_name: subject.teacher_last_name,
