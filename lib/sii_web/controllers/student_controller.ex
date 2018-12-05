@@ -21,10 +21,10 @@ defmodule SiiWeb.StudentController do
     conn |> render("show.json", student: student)
   end
 
-  def update_profile(conn, %{"student" => student_params}) do
+  def update_student_profile(conn, %{"student" => student_params}) do
     student = Guardian.Plug.current_resource(conn)
 
-    with {:ok, %Student{} = student} <- Users.update_profile(student, student_params) do
+    with {:ok, %Student{} = student} <- Users.update_student_profile(student, student_params) do
       render(conn, "show.json", student: student)
     end
   end

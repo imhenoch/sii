@@ -207,7 +207,7 @@ defmodule Sii.Users do
     |> Repo.update()
   end
 
-  def update_profile(%Student{} = student, attrs) do
+  def update_student_profile(%Student{} = student, attrs) do
     student
     |> Student.changeset_update(attrs)
     |> Repo.update()
@@ -339,6 +339,12 @@ defmodule Sii.Users do
   def update_teacher(%Teacher{} = teacher, attrs) do
     teacher
     |> Teacher.changeset(attrs)
+    |> Repo.update()
+  end
+
+  def update_teacher_profile(%Teacher{} = teacher, attrs) do
+    teacher
+    |> Teacher.changeset_update(attrs)
     |> Repo.update()
   end
 
