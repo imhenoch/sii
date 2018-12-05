@@ -70,5 +70,7 @@ defmodule SiiWeb.Router do
 
   scope "/api", SiiWeb do
     pipe_through [:api, :teachers_authenticated]
+
+    get "/teacher", TeacherController, :profile
   end
 end

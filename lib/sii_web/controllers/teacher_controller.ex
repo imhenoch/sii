@@ -16,6 +16,11 @@ defmodule SiiWeb.TeacherController do
     end
   end
 
+  def profile(conn, _params) do
+    teacher = Guardian.Plug.current_resource(conn)
+    conn |> render("show.json", teacher: teacher)
+  end
+
   def index(conn, _params) do
     teachers = Users.list_teachers()
     render(conn, "index.json", teachers: teachers)
