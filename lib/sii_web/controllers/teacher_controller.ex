@@ -24,7 +24,7 @@ defmodule SiiWeb.TeacherController do
   def update_teacher_profile(conn, %{"teacher" => teacher_params}) do
     teacher = Guardian.Plug.current_resource(conn)
 
-    with {:ok, %teacher{} = teacher} <- Users.update_teacher_profile(teacher, teacher_params) do
+    with {:ok, %Teacher{} = teacher} <- Users.update_teacher_profile(teacher, teacher_params) do
       conn |> render("show.json", teacher: teacher)
     end
   end
