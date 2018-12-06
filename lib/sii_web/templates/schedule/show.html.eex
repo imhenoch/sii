@@ -1,0 +1,38 @@
+<h1>Show Schedule</h1>
+
+<ul>
+
+  <li>
+    <strong>Schedule id:</strong>
+    <%= @schedule.id %>
+  </li>
+
+  <li>
+    <strong>Group id:</strong>
+    <%= @schedule.group_id %>
+  </li>
+
+  <li>
+    <strong>Day:</strong>
+    <%= @schedule.day %>
+  </li>
+
+  <li>
+    <strong>Start time:</strong>
+    <%= @schedule.start_time %>
+  </li>
+
+  <li>
+    <strong>End time:</strong>
+    <%= @schedule.end_time %>
+  </li>
+
+  <li>
+    <strong>Classroom:</strong>
+    <%= @schedule.classroom %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.schedule_path(@conn, :edit, @schedule) %></span>
+<span><%= link "Back", to: Routes.schedule_path(@conn, :index) %></span>
