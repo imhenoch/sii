@@ -1,0 +1,18 @@
+<h1>Show Admin</h1>
+
+<ul>
+
+  <li>
+    <strong>Admin id:</strong>
+    <%= @admin.id %>
+  </li>
+
+  <li>
+    <strong>Admin email:</strong>
+    <%= @admin.email %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.admin_path(@conn, :edit, @admin) %></span>
+<span><%= link "Back", to: Routes.admin_path(@conn, :index) %></span>

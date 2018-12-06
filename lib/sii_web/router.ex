@@ -36,6 +36,7 @@ defmodule SiiWeb.Router do
     resources "/subjects", SubjectController
     resources "/students", StudentController
     resources "/teachers", TeacherController
+    resources "/admins", AdminController
   end
 
   scope "/api", SiiWeb do
@@ -91,7 +92,12 @@ defmodule SiiWeb.Router do
     put "/teachers/:id", TeacherController, :update_json
     delete "/teachers/:id", TeacherController, :delete_json
 
-    resources "/admins", AdminController, except: [:edit, :delete]
+    get "/admins", AdminController, :index_json
+    get "/admins/:id", AdminController, :show_json
+    post "/admins", AdminController, :create_json
+    put "/admins/:id", AdminController, :update_json
+    delete "/admins/:id", AdminController, :delete_json
+
     resources "/groups", GroupController, except: [:delete, :edit]
     resources "/schedules", ScheduleController, except: [:delete, :edit]
     resources "/lists", ListController, except: [:delete]
