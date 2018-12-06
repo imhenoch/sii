@@ -1,0 +1,13 @@
+<h1>Show Chance</h1>
+
+<ul>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @chance.chance_description %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.chance_path(@conn, :edit, @chance) %></span>
+<span><%= link "Back", to: Routes.chance_path(@conn, :index) %></span>

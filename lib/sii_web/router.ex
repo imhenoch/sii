@@ -29,6 +29,13 @@ defmodule SiiWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    resources "/careers", CareerController
+    resources "/departments", DepartmentController
+    resources "/periods", PeriodController
+    resources "/chances", ChanceController
+    resources "/subjects", SubjectController
+    resources "/students", StudentController
+    resources "/teachers", TeacherController
   end
 
   scope "/api", SiiWeb do
@@ -42,13 +49,48 @@ defmodule SiiWeb.Router do
   scope "/api", SiiWeb do
     pipe_through [:api, :admins_authenticated]
 
-    resources "/careers", CareerController, except: [:delete, :edit]
-    resources "/periods", PeriodController, except: [:delete, :edit]
-    resources "/departments", DepartmentController, except: [:delete, :edit]
-    resources "/chances", ChanceController, except: [:delete, :edit]
-    resources "/subjects", SubjectController, except: [:delete, :edit]
-    resources "/students", StudentController, except: [:delete, :edit]
-    resources "/teachers", TeacherController, except: [:edit]
+    get "/careers", CareerController, :index_json
+    get "/careers/:id", CareerController, :show_json
+    post "/careers", CareerController, :create_json
+    put "/careers/:id", CareerController, :update_json
+    delete "/careers/:id", CareerController, :delete_json
+
+    get "/departments", DepartmentController, :index_json
+    get "/departments/:id", DepartmentController, :show_json
+    post "/departments", DepartmentController, :create_json
+    put "/departments/:id", DepartmentController, :update_json
+    delete "/departments/:id", DepartmentController, :delete_json
+
+    get "/periods", PeriodController, :index_json
+    get "/periods/:id", PeriodController, :show_json
+    post "/periods", PeriodController, :create_json
+    put "/periods/:id", PeriodController, :update_json
+    delete "/periods/:id", PeriodController, :delete_json
+
+    get "/chances", ChanceController, :index_json
+    get "/chances/:id", ChanceController, :show_json
+    post "/chances", ChanceController, :create_json
+    put "/chances/:id", ChanceController, :update_json
+    delete "/chances/:id", ChanceController, :delete_json
+
+    get "/subjects", SubjectController, :index_json
+    get "/subjects/:id", SubjectController, :show_json
+    post "/subjects", SubjectController, :create_json
+    put "/subjects/:id", SubjectController, :update_json
+    delete "/subjects/:id", SubjectController, :delete_json
+
+    get "/students", StudentController, :index_json
+    get "/students/:id", StudentController, :show_json
+    post "/students", StudentController, :create_json
+    put "/students/:id", StudentController, :update_json
+    delete "/students/:id", StudentController, :delete_json
+
+    get "/teachers", TeacherController, :index_json
+    get "/teachers/:id", TeacherController, :show_json
+    post "/teachers", TeacherController, :create_json
+    put "/teachers/:id", TeacherController, :update_json
+    delete "/teachers/:id", TeacherController, :delete_json
+
     resources "/admins", AdminController, except: [:edit, :delete]
     resources "/groups", GroupController, except: [:delete, :edit]
     resources "/schedules", ScheduleController, except: [:delete, :edit]

@@ -41,12 +41,12 @@ defmodule SiiWeb.TeacherController do
     conn |> render("students.json", students: students)
   end
 
-  def index(conn, _params) do
+  def index_json(conn, _params) do
     teachers = Users.list_teachers()
     render(conn, "index.json", teachers: teachers)
   end
 
-  def create(conn, %{"teacher" => teacher_params}) do
+  def create_json(conn, %{"teacher" => teacher_params}) do
     with {:ok, %Teacher{} = teacher} <- Users.create_teacher(teacher_params) do
       conn
       |> put_status(:created)
@@ -55,12 +55,12 @@ defmodule SiiWeb.TeacherController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
+  def show_json(conn, %{"id" => id}) do
     teacher = Users.get_teacher!(id)
     render(conn, "show.json", teacher: teacher)
   end
 
-  def update(conn, %{"id" => id, "teacher" => teacher_params}) do
+  def update_json(conn, %{"id" => id, "teacher" => teacher_params}) do
     teacher = Users.get_teacher!(id)
 
     with {:ok, %Teacher{} = teacher} <- Users.update_teacher(teacher, teacher_params) do
@@ -68,11 +68,67 @@ defmodule SiiWeb.TeacherController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
+  def delete_json(conn, %{"id" => id}) do
     teacher = Users.get_teacher!(id)
 
     with {:ok, %Teacher{}} <- Users.delete_teacher(teacher) do
       send_resp(conn, :no_content, "")
     end
+  end
+
+  def index(conn, _params) do
+    teachers = Users.list_teachers()
+    render(conn, "index.html", teachers: teachers)
+  end
+
+  def new(conn, _params) do
+    changeset = Users.change_teacher(%Teacher{})
+    render(conn, "new.html", changeset: changeset)
+  end
+
+  def create(conn, %{"teacher" => teacher_params}) do
+    case Users.create_teacher(teacher_params) do
+      {:ok, teacher} ->
+        conn
+        |> put_flash(:info, "Teacher created successfully.")
+        |> redirect(to: Routes.teacher_path(conn, :show, teacher))
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        render(conn, "new.html", changeset: changeset)
+    end
+  end
+
+  def show(conn, %{"id" => id}) do
+    teacher = Users.get_teacher!(id)
+    render(conn, "show.html", teacher: teacher)
+  end
+
+  def edit(conn, %{"id" => id}) do
+    teacher = Users.get_teacher!(id)
+    changeset = Users.change_teacher(teacher)
+    render(conn, "edit.html", teacher: teacher, changeset: changeset)
+  end
+
+  def update(conn, %{"id" => id, "teacher" => teacher_params}) do
+    teacher = Users.get_teacher!(id)
+
+    case Users.update_teacher(teacher, teacher_params) do
+      {:ok, teacher} ->
+        conn
+        |> put_flash(:info, "Teacher updated successfully.")
+        |> redirect(to: Routes.teacher_path(conn, :show, teacher))
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        render(conn, "edit.html", teacher: teacher, changeset: changeset)
+    end
+  end
+
+  def delete(conn, %{"id" => id}) do
+    teacher = Users.get_teacher!(id)
+    {:ok, _teacher} = Users.delete_teacher(teacher)
+
+    conn
+    |> put_flash(:info, "teacher deleted successfully.")
+    |> redirect(to: Routes.teacher_path(conn, :index))
   end
 end
