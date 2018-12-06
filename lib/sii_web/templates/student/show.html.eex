@@ -1,0 +1,28 @@
+<h1>Show Student</h1>
+
+<ul>
+
+  <li>
+    <strong>Career id:</strong>
+    <%= @student.career_id %>
+  </li>
+
+  <li>
+    <strong>Student name:</strong>
+    <%= @student.first_name %> <%= @student.last_name %>
+  </li>
+
+  <li>
+    <strong>Control number:</strong>
+    <%= @student.control_number %>
+  </li>
+
+  <li>
+    <strong>Email:</strong>
+    <%= @student.email %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.student_path(@conn, :edit, @student) %></span>
+<span><%= link "Back", to: Routes.student_path(@conn, :index) %></span>

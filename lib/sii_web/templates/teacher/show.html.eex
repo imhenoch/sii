@@ -1,0 +1,28 @@
+<h1>Show Teacher</h1>
+
+<ul>
+
+  <li>
+    <strong>Department id:</strong>
+    <%= @teacher.department_id %>
+  </li>
+
+  <li>
+    <strong>Teacher name:</strong>
+    <%= @teacher.first_name %>
+  </li>
+
+  <li>
+    <strong>Control number:</strong>
+    <%= @teacher.control_number %>
+  </li>
+
+  <li>
+    <strong>Email:</strong>
+    <%= @teacher.email %>
+  </li>
+  
+</ul>
+
+<span><%= link "Edit", to: Routes.teacher_path(@conn, :edit, @teacher) %></span>
+<span><%= link "Back", to: Routes.teacher_path(@conn, :index) %></span>
