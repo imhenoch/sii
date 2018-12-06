@@ -306,7 +306,8 @@ defmodule Sii.Users do
           student_id: s.id,
           student_first_name: s.first_name,
           student_last_name: s.last_name,
-          list_id: l.id
+          list_id: l.id,
+          student_email: s.email
         }
 
     Repo.all(query)

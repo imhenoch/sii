@@ -47,7 +47,8 @@ defmodule SiiWeb.TeacherView do
       student_id: student.student_id,
       student_first_name: student.student_first_name,
       student_last_name: student.student_last_name,
-      list_id: student.list_id
+      list_id: student.list_id,
+      student_email: student.student_email
     }
   end
 end
