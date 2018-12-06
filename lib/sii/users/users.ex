@@ -296,6 +296,22 @@ defmodule Sii.Users do
     Repo.all(query)
   end
 
+  def list_group_students(group_id) do
+    query =
+      from l in List,
+        join: s in Student,
+        on: s.id == l.student_id,
+        where: l.group_id == ^group_id,
+        select: %{
+          student_id: s.id,
+          student_first_name: s.first_name,
+          student_last_name: s.last_name,
+          list_id: l.id
+        }
+
+    Repo.all(query)
+  end
+
   @doc """
   Returns the list of teachers.
 

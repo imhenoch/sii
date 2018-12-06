@@ -36,6 +36,11 @@ defmodule SiiWeb.TeacherController do
     conn |> render("groups.json", groups: groups)
   end
 
+  def group_list(conn, %{"group_id" => group_id}) do
+    students = Users.list_group_students(group_id)
+    conn |> render("students.json", students: students)
+  end
+
   def index(conn, _params) do
     teachers = Users.list_teachers()
     render(conn, "index.json", teachers: teachers)

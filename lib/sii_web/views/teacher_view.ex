@@ -37,4 +37,17 @@ defmodule SiiWeb.TeacherView do
       career_name: group.career_name
     }
   end
+
+  def render("students.json", %{students: students}) do
+    students |> Enum.map(fn x -> render("student.json", student: x) end)
+  end
+
+  def render("student.json", %{student: student}) do
+    %{
+      student_id: student.student_id,
+      student_first_name: student.student_first_name,
+      student_last_name: student.student_last_name,
+      list_id: student.list_id
+    }
+  end
 end
