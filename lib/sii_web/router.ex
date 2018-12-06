@@ -73,5 +73,6 @@ defmodule SiiWeb.Router do
 
     get "/teacher", TeacherController, :profile
     put "/teacher", TeacherController, :update_teacher_profile
+    get "/teacher_groups", TeacherController, :teacher_groups
   end
 end

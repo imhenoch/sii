@@ -24,4 +24,16 @@ defmodule SiiWeb.TeacherView do
   def render("jwt.json", %{jwt: jwt}) do
     %{jwt: jwt}
   end
+
+  def render("groups.json", %{groups: groups}) do
+    groups |> Enum.map(fn x -> render("group.json", group: x) end)
+  end
+
+  def render("group.json", %{group: group}) do
+    %{
+      group_id: group.group_id,
+      subject_name: group.subject_name,
+      letter: group.letter
+    }
+  end
 end
