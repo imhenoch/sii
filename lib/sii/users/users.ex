@@ -8,6 +8,7 @@ defmodule Sii.Users do
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
 
   alias Sii.Education.List
+  alias Sii.Education.Career
   alias Sii.Education.Group
   alias Sii.Education.Subject
   alias Sii.Education.Kardex
@@ -282,11 +283,14 @@ defmodule Sii.Users do
       from g in Group,
         join: s in Subject,
         on: s.id == g.subject_id,
+        join: c in Career,
+        on: c.id == s.career_id,
         where: g.teacher_id == ^teacher_id,
         select: %{
           group_id: g.id,
           subject_name: s.subject_name,
-          letter: g.letter
+          letter: g.letter,
+          career_name: c.career_name
         }
 
     Repo.all(query)

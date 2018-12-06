@@ -33,7 +33,8 @@ defmodule SiiWeb.TeacherView do
     %{
       group_id: group.group_id,
       subject_name: group.subject_name,
-      letter: group.letter
+      letter: group.letter,
+      career_name: group.career_name
     }
   end
 end
