@@ -1,0 +1,17 @@
+<h1>Show Period</h1>
+
+<ul>
+
+  <li>
+    <strong>Period year:</strong>
+    <%= @period.year %>
+  </li>
+  <li>
+    <strong>Period part:</strong>
+    <%= @period.part %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.period_path(@conn, :edit, @period) %></span>
+<span><%= link "Back", to: Routes.period_path(@conn, :index) %></span>

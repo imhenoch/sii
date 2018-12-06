@@ -1,0 +1,29 @@
+<h1>Listing Periods</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Year</th>
+      <th>Part</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for period <- @periods do %>
+    <tr>
+      <td><%= period.year %></td>
+      <td><%= period.part %></td>
+
+
+      <td>
+        <%= link "Show", to: Routes.period_path(@conn, :show, period) %>
+        <%= link "Edit", to: Routes.period_path(@conn, :edit, period) %>
+        <%= link "Delete", to: Routes.period_path(@conn, :delete, period), method: :delete, data: [confirm: "Are you sure?"] %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New period", to: Routes.period_path(@conn, :new) %></span>

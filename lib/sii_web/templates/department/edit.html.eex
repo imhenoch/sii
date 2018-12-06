@@ -1,5 +1,5 @@
-<h1>Edit Career</h1>
+<h1>Edit Department</h1>
 
-<%= render "form.html", Map.put(assigns, :action, Routes.career_path(@conn, :update, @career)) %>
+<%= render "form.html", Map.put(assigns, :action, Routes.department_path(@conn, :update, @department)) %>
 
-<span><%= link "Back", to: Routes.career_path(@conn, :index) %></span>
+<span><%= link "Back", to: Routes.department_path(@conn, :index) %></span>

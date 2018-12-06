@@ -5,9 +5,13 @@
     </div>
   <% end %>
 
-  <%= label f, :department_name %>
-  <%= text_input f, :department_name %>
-  <%= error_tag f, :department_name %>
+  <%= label f, :year %>
+  <%= text_input f, :year %>
+  <%= error_tag f, :year %>
+
+  <%= label f, :part %>
+  <%= text_input f, :part %>
+  <%= error_tag f, :part %>
 
   <div>
     <%= submit "Save" %>

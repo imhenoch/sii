@@ -53,11 +53,14 @@ defmodule SiiWeb.DepartmentController do
   end
 
   def create(conn, %{"department" => department_params}) do
-    with {:ok, %Department{} = department} <- Education.create_department(department_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.department_path(conn, :show, department))
-      |> render("show.html", department: department)
+    case Education.create_department(department_params) do
+      {:ok, department} ->
+        conn
+        |> put_flash(:info, "Department created successfully.")
+        |> redirect(to: Routes.department_path(conn, :show, department))
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        render(conn, "new.html", changeset: changeset)
     end
   end
 
@@ -75,17 +78,23 @@ defmodule SiiWeb.DepartmentController do
   def update(conn, %{"id" => id, "department" => department_params}) do
     department = Education.get_department!(id)
 
-    with {:ok, %Department{} = department} <-
-           Education.update_department(department, department_params) do
-      render(conn, "show.html", department: department)
+    case Education.update_department(department, department_params) do
+      {:ok, department} ->
+        conn
+        |> put_flash(:info, "Department updated successfully.")
+        |> redirect(to: Routes.department_path(conn, :show, department))
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        render(conn, "edit.html", department: department, changeset: changeset)
     end
   end
 
   def delete(conn, %{"id" => id}) do
     department = Education.get_department!(id)
+    {:ok, _department} = Education.delete_department(department)
 
-    with {:ok, %Department{}} <- Education.delete_department(department) do
-      send_resp(conn, :no_content, "")
-    end
+    conn
+    |> put_flash(:info, "Department deleted successfully.")
+    |> redirect(to: Routes.department_path(conn, :index))
   end
 end
