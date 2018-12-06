@@ -16,6 +16,31 @@ defmodule SiiWeb.TeacherController do
     end
   end
 
+  def profile(conn, _params) do
+    teacher = Guardian.Plug.current_resource(conn)
+    conn |> render("show.json", teacher: teacher)
+  end
+
+  def update_teacher_profile(conn, %{"teacher" => teacher_params}) do
+    teacher = Guardian.Plug.current_resource(conn)
+
+    with {:ok, %Teacher{} = teacher} <- Users.update_teacher_profile(teacher, teacher_params) do
+      conn |> render("show.json", teacher: teacher)
+    end
+  end
+
+  def teacher_groups(conn, _params) do
+    teacher = Guardian.Plug.current_resource(conn)
+
+    groups = Users.list_teacher_groups(teacher.id)
+    conn |> render("groups.json", groups: groups)
+  end
+
+  def group_list(conn, %{"group_id" => group_id}) do
+    students = Users.list_group_students(group_id)
+    conn |> render("students.json", students: students)
+  end
+
   def index(conn, _params) do
     teachers = Users.list_teachers()
     render(conn, "index.json", teachers: teachers)

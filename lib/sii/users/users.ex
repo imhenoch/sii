@@ -8,6 +8,7 @@ defmodule Sii.Users do
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
 
   alias Sii.Education.List
+  alias Sii.Education.Career
   alias Sii.Education.Group
   alias Sii.Education.Subject
   alias Sii.Education.Kardex
@@ -69,6 +70,7 @@ defmodule Sii.Users do
         where: s.id == ^id,
         select: %{
           group_id: g.id,
+          letter: g.letter,
           subject_name: sub.subject_name,
           teacher_email: t.email,
           teacher_first_name: t.first_name,
@@ -206,7 +208,7 @@ defmodule Sii.Users do
     |> Repo.update()
   end
 
-  def update_profile(%Student{} = student, attrs) do
+  def update_student_profile(%Student{} = student, attrs) do
     student
     |> Student.changeset_update(attrs)
     |> Repo.update()
@@ -276,6 +278,42 @@ defmodule Sii.Users do
     end
   end
 
+  def list_teacher_groups(teacher_id) do
+    query =
+      from g in Group,
+        join: s in Subject,
+        on: s.id == g.subject_id,
+        join: c in Career,
+        on: c.id == s.career_id,
+        where: g.teacher_id == ^teacher_id,
+        select: %{
+          group_id: g.id,
+          subject_name: s.subject_name,
+          letter: g.letter,
+          career_name: c.career_name
+        }
+
+    Repo.all(query)
+  end
+
+  def list_group_students(group_id) do
+    query =
+      from l in List,
+        join: s in Student,
+        on: s.id == l.student_id,
+        where: l.group_id == ^group_id,
+        select: %{
+          student_id: s.id,
+          student_first_name: s.first_name,
+          student_last_name: s.last_name,
+          list_id: l.id,
+          student_email: s.email,
+          student_control_number: s.control_number
+        }
+
+    Repo.all(query)
+  end
+
   @doc """
   Returns the list of teachers.
 
@@ -338,6 +376,12 @@ defmodule Sii.Users do
   def update_teacher(%Teacher{} = teacher, attrs) do
     teacher
     |> Teacher.changeset(attrs)
+    |> Repo.update()
+  end
+
+  def update_teacher_profile(%Teacher{} = teacher, attrs) do
+    teacher
+    |> Teacher.changeset_update(attrs)
     |> Repo.update()
   end
 

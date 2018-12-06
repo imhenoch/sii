@@ -55,19 +55,10 @@ defmodule Sii.Users.Student do
     student
     |> cast(attrs, [
       :email,
-      :password,
-      :password_confirmation
+      :first_name,
+      :last_name
     ])
-    |> validate_required([
-      :email,
-      :password,
-      :password_confirmation
-    ])
-    |> validate_format(:email, ~r/@/)
-    |> validate_length(:password, min: 8)
-    |> validate_confirmation(:password)
     |> unique_constraint(:email)
-    |> put_password_hash
   end
 
   defp put_password_hash(changeset) do

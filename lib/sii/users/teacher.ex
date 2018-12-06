@@ -45,6 +45,16 @@ defmodule Sii.Users.Teacher do
     |> put_password_hash
   end
 
+  def changeset_update(teacher, attrs) do
+    teacher
+    |> cast(attrs, [
+      :email,
+      :first_name,
+      :last_name
+    ])
+    |> unique_constraint(:email)
+  end
+
   defp put_password_hash(changeset) do
     case changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: pass}} ->

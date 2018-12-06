@@ -60,7 +60,7 @@ defmodule SiiWeb.Router do
     pipe_through [:api, :students_authenticated]
 
     get "/student", StudentController, :profile
-    put "/student", StudentController, :update_profile
+    put "/student", StudentController, :update_student_profile
     get "/student_subjects", StudentController, :student_subjects
     get "/kardex", StudentController, :student_kardex
     get "/schedule", StudentController, :student_schedule
@@ -70,5 +70,12 @@ defmodule SiiWeb.Router do
 
   scope "/api", SiiWeb do
     pipe_through [:api, :teachers_authenticated]
+
+    get "/teacher", TeacherController, :profile
+    put "/teacher", TeacherController, :update_teacher_profile
+    get "/teacher_groups", TeacherController, :teacher_groups
+    get "/list/:group_id", TeacherController, :group_list
+    get "/grades/:id", ListController, :show
+    put "/grades/:id", ListController, :update
   end
 end
