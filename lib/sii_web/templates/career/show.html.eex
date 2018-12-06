@@ -1,0 +1,13 @@
+<h1>Show Career</h1>
+
+<ul>
+
+  <li>
+    <strong>Career name:</strong>
+    <%= @career.career_name %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.career_path(@conn, :edit, @career) %></span>
+<span><%= link "Back", to: Routes.career_path(@conn, :index) %></span>

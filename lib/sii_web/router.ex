@@ -29,6 +29,7 @@ defmodule SiiWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    resources "/careers", CareerController
   end
 
   scope "/api", SiiWeb do
@@ -42,7 +43,12 @@ defmodule SiiWeb.Router do
   scope "/api", SiiWeb do
     pipe_through [:api, :admins_authenticated]
 
-    resources "/careers", CareerController, except: [:delete, :edit]
+    get "/careers", CareerController, :index_json
+    get "/careers/:id", CareerController, :show_json
+    post "/careers", CareerController, :create_json
+    put "/careers/:id", CareerController, :update_json
+    delete "/careers/:id", CareerController, :delete_json
+
     resources "/periods", PeriodController, except: [:delete, :edit]
     resources "/departments", DepartmentController, except: [:delete, :edit]
     resources "/chances", ChanceController, except: [:delete, :edit]

@@ -1,0 +1,26 @@
+<h1>Listing Careers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Career name</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for career <- @careers do %>
+    <tr>
+      <td><%= career.career_name %></td>
+
+      <td>
+        <%= link "Show", to: Routes.career_path(@conn, :show, career) %>
+        <%= link "Edit", to: Routes.career_path(@conn, :edit, career) %>
+        <%= link "Delete", to: Routes.career_path(@conn, :delete, career), method: :delete, data: [confirm: "Are you sure?"] %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Career", to: Routes.career_path(@conn, :new) %></span>
