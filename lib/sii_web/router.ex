@@ -76,5 +76,6 @@ defmodule SiiWeb.Router do
     get "/teacher_groups", TeacherController, :teacher_groups
     get "/list/:group_id", TeacherController, :group_list
     get "/grades/:id", ListController, :show
+    put "/grades/:id", ListController, :update
   end
 end
