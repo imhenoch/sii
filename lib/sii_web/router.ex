@@ -64,6 +64,12 @@ defmodule SiiWeb.Router do
     put "/periods/:id", PeriodController, :update_json
     delete "/periods/:id", PeriodController, :delete_json
 
+    get "/chances", ChanceController, :index_json
+    get "/chances/:id", ChanceController, :show_json
+    post "/chances", ChanceController, :create_json
+    put "/chances/:id", ChanceController, :update_json
+    delete "/chances/:id", ChanceController, :delete_json
+
     resources "/subjects", SubjectController, except: [:delete, :edit]
     resources "/students", StudentController, except: [:delete, :edit]
     resources "/teachers", TeacherController, except: [:edit]

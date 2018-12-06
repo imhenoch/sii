@@ -1,0 +1,26 @@
+<h1>Listing Chances</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Chance</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for chance <- @chances do %>
+    <tr>
+      <td><%= chance.chance_description %></td>
+
+      <td>
+        <%= link "Show", to: Routes.chance_path(@conn, :show, chance) %>
+        <%= link "Edit", to: Routes.chance_path(@conn, :edit, chance) %>
+        <%= link "Delete", to: Routes.chance_path(@conn, :delete, chance), method: :delete, data: [confirm: "Are you sure?"] %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New chance", to: Routes.chance_path(@conn, :new) %></span>
