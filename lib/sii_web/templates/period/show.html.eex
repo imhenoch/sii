@@ -3,9 +3,15 @@
 <ul>
 
   <li>
+    <strong>Period id:</strong>
+    <%= @period.id %>
+  </li>
+
+  <li>
     <strong>Period year:</strong>
     <%= @period.year %>
   </li>
+
   <li>
     <strong>Period part:</strong>
     <%= @period.part %>

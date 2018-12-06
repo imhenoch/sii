@@ -1,0 +1,38 @@
+<h1>Show Group</h1>
+
+<ul>
+
+  <li>
+    <strong>Group id:</strong>
+    <%= @group.id %>
+  </li>
+
+  <li>
+    <strong>Subjejct id:</strong>
+    <%= @group.subject_id %>
+  </li>
+
+  <li>
+    <strong>Teacher id:</strong>
+    <%= @group.teacher_id %>
+  </li>
+
+  <li>
+    <strong>Period id:</strong>
+    <%= @group.period %>
+  </li>
+
+  <li>
+    <strong>Letter:</strong>
+    <%= @group.letter %>
+  </li>
+
+  <li>
+    <strong>Open:</strong>
+    <%= @group.open %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.group_path(@conn, :edit, @group) %></span>
+<span><%= link "Back", to: Routes.group_path(@conn, :index) %></span>

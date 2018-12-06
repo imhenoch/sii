@@ -3,6 +3,11 @@
 <ul>
 
   <li>
+    <strong>Career id:</strong>
+    <%= @career.id %>
+  </li>
+
+  <li>
     <strong>Career name:</strong>
     <%= @career.career_name %>
   </li>
