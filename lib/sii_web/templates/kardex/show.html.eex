@@ -1,0 +1,33 @@
+<h1>Show Kardex</h1>
+
+<ul>
+
+  <li>
+    <strong>Kardex id:</strong>
+    <%= @kardex.id %>
+  </li>
+
+  <li>
+    <strong>Student:</strong>
+    <%= @kardex.student_id %>
+  </li>
+
+  <li>
+    <strong>Subject:</strong>
+    <%= @kardex.subject_id %>
+  </li>
+
+  <li>
+    <strong>Chance:</strong>
+    <%= @kardex.chance_id %>
+  </li>
+
+  <li>
+    <strong>Grade:</strong>
+    <%= @kardex.grade %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.kardex_path(@conn, :edit, @kardex) %></span>
+<span><%= link "Back", to: Routes.kardex_path(@conn, :index) %></span>

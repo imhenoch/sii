@@ -1,0 +1,28 @@
+<h1>Listing Kardexes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Student</th>
+      <th>Subject</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for kardex <- @kardexes do %>
+    <tr>
+      <td><%= kardex.student_id %></td>
+      <td><%= kardex.subject_id %></td>
+
+      <td>
+        <%= link "Show", to: Routes.kardex_path(@conn, :show, kardex) %>
+        <%= link "Edit", to: Routes.kardex_path(@conn, :edit, kardex) %>
+        <%= link "Delete", to: Routes.kardex_path(@conn, :delete, kardex), method: :delete, data: [confirm: "Are you sure?"] %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New kardex", to: Routes.kardex_path(@conn, :new) %></span>
